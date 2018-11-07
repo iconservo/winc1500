@@ -41,6 +41,7 @@ INCLUDES
 #include "driver/source/nmasic.h"
 #include "m2m_hif.h"
 
+#define CONF_PERIPH
 #ifdef CONF_PERIPH
 
 /*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*

@@ -524,6 +524,7 @@ ERR1:
 	return ret;
 }
 
+#define CONF_PERIPH
 #ifdef CONF_PERIPH
 
 sint8 set_gpio_dir(uint8 gpio, uint8 dir)
