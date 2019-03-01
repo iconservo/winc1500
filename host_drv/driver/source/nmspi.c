@@ -305,14 +305,14 @@ static sint8 spi_data_rsp(uint8 cmd)
 		len = 3;
 
 	if (M2M_SUCCESS != nmi_spi_read(&rsp[0], len)) {
-		M2M_ERR("[nmi spi]: Failed bus error...\n");
+		M2M_INFO("[nmi spi]: Failed bus error...\n");
 		result = N_FAIL;
 		goto _fail_;
 	}
 		
 	if((rsp[len-1] != 0)||(rsp[len-2] != 0xC3))
 	{
-		M2M_ERR("[nmi spi]: Failed data response read, %x %x %x\n",rsp[0],rsp[1],rsp[2]);
+		M2M_INFO("[nmi spi]: Failed data response read, %x %x %x\n",rsp[0],rsp[1],rsp[2]);
 		result = N_FAIL;
 		goto _fail_;
 	}
@@ -693,7 +693,7 @@ static int spi_cmd_complete(uint8_t cmd, uint32_t adr, uint8_t *b, uint32_t sz, 
 					retry = SPI_RESP_RETRY_COUNT;
 					do {
 						if (nmi_spi_read(&rsp, 1) != M2M_SUCCESS) {
-							M2M_ERR("[nmi spi]: Failed data response read, bus error...\n");
+							M2M_INFO("[nmi spi]: Failed data response read, bus error...\n");
 							result = N_FAIL;
 							break;
 						}
@@ -757,7 +757,7 @@ static sint8 spi_data_read(uint8 *b, uint16 sz,uint8 clockless)
 		retry = SPI_RESP_RETRY_COUNT;
 		do {
 			if (M2M_SUCCESS != nmi_spi_read(&rsp, 1)) {
-				M2M_ERR("[nmi spi]: Failed data response read, bus error...\n");
+				M2M_INFO("[nmi spi]: Failed data response read, bus error...\n");
 				result = N_FAIL;
 				break;
 			}
@@ -769,7 +769,7 @@ static sint8 spi_data_read(uint8 *b, uint16 sz,uint8 clockless)
 			break;
 
 		if (retry <= 0) {
-			M2M_ERR("[nmi spi]: Failed data response read...(%02x)\n", rsp);
+			M2M_INFO("[nmi spi]: Failed data response read...(%02x)\n", rsp);
 			result = N_FAIL;
 			break;
 		}
@@ -933,7 +933,7 @@ _FAIL_:
 		nm_bsp_sleep(1);
 		spi_cmd(CMD_RESET, 0, 0, 0, 0);
 		spi_cmd_rsp(CMD_RESET);
-		M2M_ERR("Reset and retry %d %lx %lx\n",retry,addr,u32data);
+		M2M_INFO("Reset and retry %d %lx %lx\n",retry,addr,u32data);
 		nm_bsp_sleep(1);
 		retry--;
 		if(retry) goto _RETRY_;
@@ -1000,7 +1000,7 @@ _FAIL_:
 		nm_bsp_sleep(1);
 		spi_cmd(CMD_RESET, 0, 0, 0, 0);
 		spi_cmd_rsp(CMD_RESET);
-		M2M_ERR("Reset and retry %d %lx %d\n",retry,addr,size);
+		M2M_INFO("Reset and retry %d %lx %d\n",retry,addr,size);
 		nm_bsp_sleep(1);
 		retry--;
 		if(retry) goto _RETRY_;
@@ -1050,7 +1050,7 @@ _RETRY_:
 	/* to avoid endianness issues */
 	result = spi_data_read(&tmp[0], 4, clockless);
 	if (result != N_OK) {
-		M2M_ERR("[nmi spi]: Failed data read...\n");
+		M2M_INFO("[nmi spi]: Failed data read...\n");
 		goto _FAIL_;
 	}
 #else
@@ -1074,7 +1074,7 @@ _FAIL_:
 		nm_bsp_sleep(1);
 		spi_cmd(CMD_RESET, 0, 0, 0, 0);
 		spi_cmd_rsp(CMD_RESET);
-		M2M_ERR("Reset and retry %d %lx\n",retry,addr);
+		M2M_INFO("Reset and retry %d %lx\n",retry,addr);
 		nm_bsp_sleep(1);
 		retry--;
 		if(retry) goto _RETRY_;
@@ -1146,7 +1146,7 @@ _FAIL_:
 		nm_bsp_sleep(1);
 		spi_cmd(CMD_RESET, 0, 0, 0, 0);
 		spi_cmd_rsp(CMD_RESET);
-		M2M_ERR("Reset and retry %d %lx %d\n",retry,addr,size);
+		M2M_INFO("Reset and retry %d %lx %d\n",retry,addr,size);
 		nm_bsp_sleep(1);
 		retry--;
 		if(retry) goto _RETRY_;

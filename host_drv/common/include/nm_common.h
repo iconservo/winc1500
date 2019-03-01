@@ -43,7 +43,8 @@
 #define _NM_COMMON_H_
 
 #include "bsp/include/nm_bsp.h"
-#include "common/include/nm_debug.h"
+#include "bsp/include/nm_bsp_internal.h"
+// #include "common/include/nm_debug.h"
 
 /**@addtogroup COMMONDEF
  */
